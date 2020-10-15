@@ -1,7 +1,5 @@
 package com.lambdaschool.sampleemps.models;
 
-import javax.validation.constraints.Email;
-
 /**
  * A model used to create a new user. The minimum information needed to create a user.
  * Note the role will default to USER.

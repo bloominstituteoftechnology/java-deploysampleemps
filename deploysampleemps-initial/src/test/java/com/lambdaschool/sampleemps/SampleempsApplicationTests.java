@@ -1,15 +1,23 @@
 package com.lambdaschool.sampleemps;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootTest
-class SampleempsApplicationTests
+/**
+ * Main class to start the application.
+ */
+// @EnableJpaAuditing
+@SpringBootApplication
+public class SampleempsApplicationTests
 {
-
-    @Test
-    void contextLoads()
+    /**
+     * Main method to start the application.
+     *
+     * @param args Not used in this application.
+     */
+    public static void main(String[] args)
     {
+        SpringApplication.run(SampleempsApplication.class,
+            args);
     }
-
 }

@@ -58,8 +58,10 @@ public class UserServiceImpl
             .clear();
         for (UserRoles ur : user.getRoles())
         {
-            Role addRole = rolerepos.findById(ur.getRole().getRoleid())
-                .orElseThrow(() -> new ResourceNotFoundException("Role id " + ur.getRole().getRoleid() + " not found!"));
+            Role addRole = rolerepos.findById(ur.getRole()
+                .getRoleid())
+                .orElseThrow(() -> new ResourceNotFoundException("Role id " + ur.getRole()
+                    .getRoleid() + " not found!"));
 
             newUser.getRoles()
                 .add(new UserRoles(newUser,
