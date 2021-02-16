@@ -1,0 +1,82 @@
+// get barnbarn's access token
+curl -X POST --user "lambda-client:lambda-secret" -d "grant_type=password&username=barnbarn&password=password" http://localhost:2019/login
+
+{"access_token":"f4e09bf8-173d-4b1d-973e-344d463c49d8","token_type":"bearer","scope":"read write trust"}
+
+// get cinnamon's access token with wrong password
+curl -X POST --user "lambda-client:lambda-secret" -d "grant_type=password&username=cinnamon&password=barnbarn" http://localhost:2019/login
+
+{"error":"invalid_grant","error_description":"Bad credentials"}
+
+// get cinnamon's access token
+curl -X POST --user "lambda-client:lambda-secret" -d "grant_type=password&username=cinnamon&password=ILuvM4th\!" http://localhost:2019/login
+
+{"access_token":"db4b8334-42d8-4343-bbbc-212bd228145b","token_type":"bearer","scope":"read write trust"}%
+
+// list all employees via cinnamon
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer db4b8334-42d8-4343-bbbc-212bd228145b" http://localhost:2019/employees/employees
+
+[{"employeeid":3,"name":"CINNAMON","salary":80000.0,"jobnames":[{"jobname":{"jobtitleid":1,"title":"Big Boss"},"manager":"Stumps"},{"jobname":{"jobtitleid":2,"title":"Wizard"},"manager":"Stumps"}],"emails":[{"emailid":4,"email":"hops@local.com"},{"emailid":5,"email":"bunny@hoppin.local"}]},{"employeeid":6,"name":"BARNBARN","salary":80000.0,"jobnames":[{"jobname":{"jobtitleid":1,"title":"Big Boss"},"manager":"Stumps"}],"emails":[{"emailid":7,"email":"barnbarn@local.com"}]},{"employeeid":8,"name":"JOHN","salary":75000.0,"jobnames":[],"emails":[]},{"employeeid":9,"name":"Sharice Kohler IV","salary":87032.40341678199,"jobnames":[{"jobname":{"jobtitleid":1,"title":"Big Boss"},"manager":"Stumps"}],"emails":[{"emailid":10,"email":"sima.jaskolski@gmail.com"},{"emailid":11,"email":"floyd.kertzmann@yahoo.com"},{"emailid":12,"email":"cary.kling@hotmail.com"},{"emailid":13,"email":"dot.leuschke@hotmail.com"},{"emailid":14,"email":"oswaldo.dietrich@yahoo.com"},{"emailid":15,"email":"owen.zulauf@hotmail.com"}]},{"employeeid":16,"name":"Jarrett Hickle","salary":137852.49728921294,"jobnames":[{"jobname":{"jobtitleid":1,"title":"Big Boss"},"manager":"Stumps"}],"emails":[{"emailid":17,"email":"luther.barrows@gmail.com"},{"emailid":18,"email":"joyce.von@hotmail.com"},{"emailid":19,"email":"beatris.sanford@yahoo.com"},{"emailid":20,"email":"roland.reichert@gmail.com"},{"emailid":21,"email":"granville.swift@gmail.com"},{"emailid":22,"email":"frances.berge@hotmail.com"},{"emailid":23,"email":"star.huels@hotmail.com"},{"emailid":24,"email":"kasey.schimmel@hotmail.com"}]},{"employeeid":25,"name":"Dr. Darius Davis","salary":77508.31612217778,"jobnames":[{"jobname":{"jobtitleid":1,"title":"Big Boss"},"manager":"Stumps"}],"emails":[{"emailid":26,"email":"lona.hermiston@yahoo.com"},{"emailid":27,"email":"jan.schaefer@hotmail.com"},{"emailid":28,"email":"noemi.orn@yahoo.com"},{"emailid":29,"email":"jacqueline.gibson@yahoo.com"},{"emailid":30,"email":"lilliana.harris@yahoo.com"},{"emailid":31,"email":"irish.moen@gmail.com"},{"emailid":32,"email":"rolando.gaylord@hotmail.com"}]}]
+
+// list 1 employee by id via cinnamon
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer db4b8334-42d8-4343-bbbc-212bd228145b" http://localhost:2019/employees/employee/3
+
+{"employeeid":3,"name":"CINNAMON","salary":80000.0,"jobnames":[{"jobname":{"jobtitleid":1,"title":"Big Boss"},"manager":"Stumps"},{"jobname":{"jobtitleid":2,"title":"Wizard"},"manager":"Stumps"}],"emails":[{"emailid":4,"email":"hops@local.com"},{"emailid":5,"email":"bunny@hoppin.local"}]}
+
+// delete employee via barnbarn - fails
+curl -X DELETE -H "Authorization: Bearer f4e09bf8-173d-4b1d-973e-344d463c49d8" http://localhost:2019/employees/employee/9
+
+{"error":"access_denied","error_description":"Access is denied"}
+
+// delete employee via cinnamon
+curl -X DELETE -H "Authorization: Bearer db4b8334-42d8-4343-bbbc-212bd228145b" http://localhost:2019/employees/employee/9
+
+No Body Response
+
+// POST employee via cinnamon
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer db4b8334-42d8-4343-bbbc-212bd228145b" -d "{\"name\": \"STUMPS\",\"salary\": 120000.0,\"jobnames\": [{\"jobname\": {\"jobtitleid\": 1,\"title\": \"Big Boss\"},\"manager\": \"Stumps\"}],\"emails\": [{\"email\": \"happycorgi@local.com\"},{\"email\": \"stumpsthecorgi@local.com\"}]}" http://localhost:2019/employees/employee
+
+No Body Response
+
+// PUT employee via cinnamon
+curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer db4b8334-42d8-4343-bbbc-212bd228145b" -d "{\"name\": \"Barney\",\"salary\": 100000.0}" http://localhost:2019/employees/employee/6
+
+No Body Response
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Data used for POST
+
+{
+    "name": "STUMPS",
+    "salary": 120000.0,
+    "jobnames": [
+        {
+            "jobname": {
+                "jobtitleid": 1,
+                "title": "Big Boss"
+            },
+            "manager": "Tiger"
+        }
+    ],
+    "emails": [
+        {
+            "email": "happycorgi@local.com"
+        },
+                {
+            "email": "stumpsthecorgi@local.com"
+        }
+    ]
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Data used for PUT / 6
+
+{
+    "name": "Barney",
+    "salary": 100000.0
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+

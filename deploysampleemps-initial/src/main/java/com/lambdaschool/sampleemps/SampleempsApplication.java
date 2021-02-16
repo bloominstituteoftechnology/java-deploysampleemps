@@ -34,6 +34,7 @@ public class SampleempsApplication
     {
         if (System.getenv(envvar) == null)
         {
+            System.out.println("***** Environment Variable " + envvar + "Not Found!!! *****");
             stop = true;
         }
     }
@@ -53,9 +54,6 @@ public class SampleempsApplication
         {
             SpringApplication.run(SampleempsApplication.class,
                 args);
-        } else
-        {
-            System.out.println("Environment Variables NOT SET: OAUTHCLIENTID and / or OAUTHCLIENTSECRET");
         }
     }
 }

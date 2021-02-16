@@ -14,12 +14,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class SampleempsApplication
 {
     /**
-     * Connect to the system environment where environment variables live.
-     */
-    @Autowired
-    private static Environment env;
-
-    /**
      * If an environment variable is not found, set this to true
      */
     private static boolean stop = false;
@@ -34,6 +28,7 @@ public class SampleempsApplication
     {
         if (System.getenv(envvar) == null)
         {
+            System.out.println("***** Environment Variable " + envvar + "Not Found!!! *****");
             stop = true;
         }
     }
@@ -53,9 +48,6 @@ public class SampleempsApplication
         {
             SpringApplication.run(SampleempsApplication.class,
                 args);
-        } else
-        {
-            System.out.println("Environment Variables NOT SET: OAUTHCLIENTID and / or OAUTHCLIENTSECRET");
         }
     }
 }
