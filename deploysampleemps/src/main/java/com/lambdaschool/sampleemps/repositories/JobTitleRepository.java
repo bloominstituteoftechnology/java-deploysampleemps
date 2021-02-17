@@ -11,7 +11,7 @@ public interface JobTitleRepository
 {
     @Transactional
     @Modifying
-    @Query(value = "UPDATE jobtitles SET title = :title, last_modified_by = :uname, last_modified_date = CURRENT_TIMESTAMP WHERE jobtitleid = :jobtitleid",
+    @Query(value = "UPDATE jobtitles SET title = :title, lastmodifiedby = :uname, lastmodifieddate = CURRENT_TIMESTAMP WHERE jobtitleid = :jobtitleid",
         nativeQuery = true)
     void updateJobTitle(
         String uname,
